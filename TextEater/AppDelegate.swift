@@ -11,6 +11,7 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBOutlet weak var menu: NSMenu?
+    @IBOutlet weak var fastToggleItem: NSMenuItem?
 
     var statusItem: NSStatusItem?
     var selectionHandler: SelectionHandler?
@@ -30,6 +31,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if let menu = menu {
             statusItem?.menu = menu
         }
+        
+        if let fastToggleItem = self.fastToggleItem {
+            fastToggleItem.state =  UserDefaults.standard.bool(forKey: "fast") ? .on : .off
+        }
     }
 
 
@@ -46,9 +51,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if sender.state == .on {
             sender.state = .off
             self.selectionHandler?.recognitionLevel = .accurate
+            UserDefaults.standard.set(false, forKey: "fast")
         } else {
             sender.state = .on
             self.selectionHandler?.recognitionLevel = .fast
+            UserDefaults.standard.set(true, forKey: "fast")
         }
     }
 }

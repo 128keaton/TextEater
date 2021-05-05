@@ -31,6 +31,8 @@ class SelectionHandler {
 
     init(delegate: SelectionHandlerDelegate) {
         self.delegate = delegate
+        
+        self.recognitionLevel = UserDefaults.standard.bool(forKey: "fast") ? .fast : .accurate
     }
 
     func startListening() {

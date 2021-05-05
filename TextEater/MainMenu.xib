@@ -9,6 +9,7 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="TEE-vS-YS4" customClass="AppDelegate" customModule="TextEater" customModuleProvider="target">
             <connections>
+                <outlet property="fastToggleItem" destination="7sq-MU-2Fx" id="WKU-3r-9EJ"/>
                 <outlet property="menu" destination="DyD-f5-xWe" id="BRN-iH-tCg"/>
             </connections>
         </customObject>
