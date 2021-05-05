@@ -38,6 +38,9 @@ class SelectionHandler {
     }
 
     func startListening() {
+        
+        NSCursor.crosshair.set()
+        
         self.dragMonitor = NSEvent.addGlobalMonitorForEvents(matching: .leftMouseDragged) { event in
             self.handleDragging(event)
         }
@@ -52,6 +55,9 @@ class SelectionHandler {
     }
 
     func stopListening() {
+        
+        NSCursor.arrow.set()
+        
         if self.dragMonitor != nil {
             NSEvent.removeMonitor(self.dragMonitor!)
             self.dragMonitor = nil
