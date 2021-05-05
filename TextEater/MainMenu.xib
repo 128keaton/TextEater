@@ -19,6 +19,12 @@
                         <action selector="captureToggleWithSender:" target="TEE-vS-YS4" id="pZQ-Wy-ypP"/>
                     </connections>
                 </menuItem>
+                <menuItem title="Fast" state="on" id="7sq-MU-2Fx">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="updateModeWithSender:" target="TEE-vS-YS4" id="tUe-va-6NF"/>
+                    </connections>
+                </menuItem>
                 <menuItem isSeparatorItem="YES" id="Tj3-uY-DLa"/>
                 <menuItem title="Quit" id="OEu-TJ-ecy">
                     <modifierMask key="keyEquivalentModifierMask"/>

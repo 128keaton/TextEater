@@ -11,6 +11,7 @@ import CoreML
 import AppKit
 
 protocol SelectionHandlerDelegate {
+    func processingResults()
     func resultsAvailable(text: String)
 }
 
@@ -24,14 +25,9 @@ class SelectionHandler {
     private var shapeLayer: CAShapeLayer!
     private var rect: CGRect?
     private var delegate: SelectionHandlerDelegate?
-
-    lazy var textDetectionRequest: VNRecognizeTextRequest = {
-        let request = VNRecognizeTextRequest(completionHandler: self.handleDetection)
-        request.recognitionLevel = .fast
-        request.recognitionLanguages = ["en_US"]
-
-        return request
-    }()
+    
+    var recognitionLevel: VNRequestTextRecognitionLevel = .fast
+    
 
     init(delegate: SelectionHandlerDelegate) {
         self.delegate = delegate
@@ -74,6 +70,15 @@ class SelectionHandler {
         }
     }
 
+    private func getTextRecognitionRequest() -> VNRecognizeTextRequest {
+        let request = VNRecognizeTextRequest(completionHandler: self.handleDetection)
+        
+        print("Creating request with recognition level: \(self.recognitionLevel == .fast ? "Fast" : "Accurate")")
+        request.recognitionLevel = self.recognitionLevel
+        request.recognitionLanguages = ["en_US"]
+
+        return request
+    }
 
     private func handleDetection(request: VNRequest?, error: Error?) {
         if let error = error {
@@ -109,15 +114,14 @@ class SelectionHandler {
             self.globalWindow = nil
         }
 
-        self.globalWindow = NSWindow(contentRect: windowRect, styleMask: .borderless, backing: .buffered, defer: true)
+        self.globalWindow = NSWindow(contentRect: windowRect, styleMask: .borderless, backing: .buffered, defer: false)
         self.globalWindow?.isOpaque = false
         self.globalWindow?.backgroundColor = NSColor.clear
         self.globalWindow?.level = NSWindow.Level.init(Int(CGWindowLevelForKey(.statusWindow)))
-        self.globalWindow?.setAccessibilityHidden(true)
+     //   self.globalWindow?.setAccessibilityHidden(true)
         self.globalWindow?.makeKeyAndOrderFront(nil)
         self.globalWindow?.contentView?.wantsLayer = true
         self.globalWindow?.acceptsMouseMovedEvents = true
-        self.globalWindow?.ignoresMouseEvents = false
         self.globalWindow?.isReleasedWhenClosed = false
 
         NSApplication.shared.activate(ignoringOtherApps: true)
@@ -128,6 +132,8 @@ class SelectionHandler {
         if let imageRect = self.rect,
             let windowID = self.globalWindow?.windowNumber,
             let screen = self.getScreenWithMouse(), imageRect.width > 5 && imageRect.height > 5 {
+            self.delegate?.processingResults()
+            
             let cgScreenshot = CGWindowListCreateImage(screen.frame, .optionOnScreenBelowWindow, CGWindowID(windowID), .bestResolution)
 
             let goodPoint = screen.frame.height - NSMaxY(imageRect)
@@ -140,10 +146,10 @@ class SelectionHandler {
                 image.addRepresentation(rep)
 
 
-                let requests = [self.textDetectionRequest]
+                let requests = [self.getTextRecognitionRequest()]
                 let imageRequestHandler = VNImageRequestHandler(cgImage: croppedCGScreenshot, orientation: .up, options: [:])
 
-                DispatchQueue.global().async {
+                DispatchQueue.main.async {
                     do {
                         try imageRequestHandler.perform(requests)
                     } catch let error {
