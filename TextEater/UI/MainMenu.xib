@@ -7,30 +7,30 @@
         <customObject id="-2" userLabel="File's Owner"/>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customObject id="TEE-vS-YS4" customClass="AppDelegate" customModule="TextEater" customModuleProvider="target">
+        <customObject id="TEE-vS-YS4" customClass="AppDelegate" customModule="TextEater" customModuleProvider="target"/>
+        <customObject id="I7z-ZM-4pw" customClass="StatusBarManager" customModule="TextEater" customModuleProvider="target">
             <connections>
-                <outlet property="fastToggleItem" destination="7sq-MU-2Fx" id="WKU-3r-9EJ"/>
-                <outlet property="menu" destination="DyD-f5-xWe" id="BRN-iH-tCg"/>
+                <outlet property="appDelegate" destination="TEE-vS-YS4" id="LSR-n3-JeB"/>
+                <outlet property="menu" destination="DyD-f5-xWe" id="6nn-h9-gJV"/>
             </connections>
         </customObject>
         <menu id="DyD-f5-xWe">
             <items>
                 <menuItem title="Capture" keyEquivalent="c" id="pyG-tE-g5H">
                     <connections>
-                        <action selector="captureToggleWithSender:" target="TEE-vS-YS4" id="pZQ-Wy-ypP"/>
+                        <action selector="captureToggleWithSender:" target="I7z-ZM-4pw" id="xMX-KS-RHW"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Fast" state="on" id="7sq-MU-2Fx">
-                    <modifierMask key="keyEquivalentModifierMask"/>
+                <menuItem title="Preferences" keyEquivalent="," id="Rul-K9-f5l">
                     <connections>
-                        <action selector="updateModeWithSender:" target="TEE-vS-YS4" id="tUe-va-6NF"/>
+                        <action selector="showPreferencesWithSender:" target="I7z-ZM-4pw" id="8S2-PJ-gD4"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="Tj3-uY-DLa"/>
                 <menuItem title="Quit" id="OEu-TJ-ecy">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="quitAppWithSender:" target="TEE-vS-YS4" id="p5m-ia-eZd"/>
+                        <action selector="quitAppWithSender:" target="I7z-ZM-4pw" id="pFq-km-RjE"/>
                     </connections>
                 </menuItem>
             </items>

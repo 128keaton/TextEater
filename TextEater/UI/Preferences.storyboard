@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="bU7-R8-ocO">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Preferences-->
+        <scene sceneID="PEd-7d-5j0">
+            <objects>
+                <viewController title="Preferences" id="bU7-R8-ocO" customClass="PreferencesViewController" customModule="TextEater" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="tOy-S4-hL0">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <box fixedFrame="YES" title="Miscellaneous" translatesAutoresizingMaskIntoConstraints="NO" id="M7g-JV-74x">
+                                <rect key="frame" x="17" y="16" width="416" height="97"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <view key="contentView" id="fob-7A-dgH">
+                                    <rect key="frame" x="3" y="3" width="410" height="79"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dtL-lA-lQG">
+                                            <rect key="frame" x="20" y="31" width="372" height="18"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="check" title="Debug Mode:" bezelStyle="regularSquare" imagePosition="right" state="on" inset="2" id="SaD-mc-PsU">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="debugChanged:" target="bU7-R8-ocO" id="Yvb-h9-EKV"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                </view>
+                            </box>
+                            <box fixedFrame="YES" title="General" translatesAutoresizingMaskIntoConstraints="NO" id="kad-uB-WM7">
+                                <rect key="frame" x="17" y="131" width="416" height="149"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <view key="contentView" id="7Of-hg-1dX">
+                                    <rect key="frame" x="3" y="3" width="410" height="131"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I3n-1D-Fm0">
+                                            <rect key="frame" x="291" y="79" width="103" height="25"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <popUpButtonCell key="cell" type="push" title="Item 3" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="v2B-tV-EWO" id="mFI-aK-OOC">
+                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="menu"/>
+                                                <menu key="menu" id="evc-y2-L0u">
+                                                    <items>
+                                                        <menuItem title="Fast" id="fmd-BX-NDZ"/>
+                                                        <menuItem title="Accurate" id="7ew-SE-K9o"/>
+                                                        <menuItem title="Item 3" state="on" id="v2B-tV-EWO"/>
+                                                    </items>
+                                                </menu>
+                                            </popUpButtonCell>
+                                            <connections>
+                                                <action selector="modeChanged:" target="bU7-R8-ocO" id="SKO-CD-BfD"/>
+                                            </connections>
+                                        </popUpButton>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wXv-Km-x9t">
+                                            <rect key="frame" x="18" y="85" width="118" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Recognition Mode:" id="fB2-RL-2Sw">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hy9-H0-n7B">
+                                            <rect key="frame" x="20" y="52" width="372" height="18"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="check" title="Show Preview:" bezelStyle="regularSquare" imagePosition="right" state="on" inset="2" id="mRd-Uf-xkN">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="previewChanged:" target="bU7-R8-ocO" id="RTl-g9-7Mu"/>
+                                            </connections>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WPw-M9-WAG">
+                                            <rect key="frame" x="20" y="19" width="372" height="18"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="check" title="Notify on Completion:" bezelStyle="regularSquare" imagePosition="right" state="on" inset="2" id="t8U-4g-xfL">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="notifyChanged:" target="bU7-R8-ocO" id="GCe-RZ-3un"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                </view>
+                            </box>
+                        </subviews>
+                    </view>
+                    <connections>
+                        <outlet property="debugButton" destination="dtL-lA-lQG" id="2Rz-3e-Z68"/>
+                        <outlet property="modeButton" destination="I3n-1D-Fm0" id="zLu-HO-7d8"/>
+                        <outlet property="notifyButton" destination="WPw-M9-WAG" id="dkh-sI-H1e"/>
+                        <outlet property="previewButton" destination="hy9-H0-n7B" id="fqv-jd-SA3"/>
+                    </connections>
+                </viewController>
+                <customObject id="9uD-mB-xHs" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-28" y="87"/>
+        </scene>
+    </scenes>
+</document>
