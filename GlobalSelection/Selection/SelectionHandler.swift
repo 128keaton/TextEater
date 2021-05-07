@@ -21,7 +21,7 @@ public class SelectionHandler: SelectionViewDelegate {
     private var selectionView: SelectionView?
     private var recognitionLevel: VNRequestTextRecognitionLevel = .fast
     private var previewWindow: PreviewWindow?
-    
+
     public var showPreview: Bool = true
     public var debug: Bool = false
     public var recognizeFast: Bool = true {
@@ -29,7 +29,7 @@ public class SelectionHandler: SelectionViewDelegate {
             self.recognitionLevel = recognizeFast ? .fast : .accurate
         }
     }
-    
+
 
     public init(delegate: SelectionHandlerDelegate) {
         self.delegate = delegate
@@ -39,27 +39,23 @@ public class SelectionHandler: SelectionViewDelegate {
         self.globalWindow = self.setupWindow(windowRect: self.getScreenWithMouse()!.frame)
     }
 
-    public func stopListening() {
-        self.hidePreviewWindow()
-    }
-
     private func hidePreviewWindow() {
         DispatchQueue.main.async {
             if let previewWindow = self.previewWindow {
                 previewWindow.close()
             }
-            
+
             self.previewWindow = nil
         }
     }
-    
+
     private func getTextRecognitionRequest() -> VNRecognizeTextRequest {
         let request = VNRecognizeTextRequest(completionHandler: self.handleDetection)
 
         print("Creating request with recognition level: \(self.recognitionLevel == .fast ? "fast" : "accurate")")
         print("Show preview window: \(self.showPreview ? "yes" : "no")")
         print("Show debug overlay: \(self.debug ? "yes" : "no")")
-        
+
         request.recognitionLevel = self.recognitionLevel
         request.recognitionLanguages = ["en_US"]
 
@@ -104,10 +100,10 @@ public class SelectionHandler: SelectionViewDelegate {
 
         let window = SelectionWindow(frame: windowRect, selectionDelegate: self, debug: self.debug)
         NSApplication.shared.activate(ignoringOtherApps: true)
-        
+
         return window
     }
-    
+
     private func showPreviewWindow(image: NSImage) {
         if self.showPreview {
             self.previewWindow = PreviewWindow(image: image)
@@ -118,47 +114,41 @@ public class SelectionHandler: SelectionViewDelegate {
         if let windowID = self.globalWindow?.windowNumber,
             let screen = self.getScreenWithMouse(), rect.width > 5 && rect.height > 5 {
             self.delegate?.processingResults()
-            var correctecRect = rect
-            
-            correctecRect.origin.y = screen.frame.height - rect.origin.y - rect.height;
-            
+            var correctedRect = rect
+
+            correctedRect.origin.y = screen.frame.height - rect.origin.y - rect.height;
+
             if (screen.frame.origin.y < 0) {
-                correctecRect.origin.y = correctecRect.origin.y - screen.frame.origin.y
+                correctedRect.origin.y = correctedRect.origin.y - screen.frame.origin.y
             }
-            
-
-            correctecRect.origin.x = correctecRect.origin.x + screen.frame.origin.x
-            let cgScreenshot = CGWindowListCreateImage(correctecRect, .optionOnScreenBelowWindow, CGWindowID(windowID), .bestResolution)
 
 
+            correctedRect.origin.x = correctedRect.origin.x + screen.frame.origin.x
+            let cgScreenshot = CGWindowListCreateImage(correctedRect, .optionOnScreenBelowWindow, CGWindowID(windowID), .bestResolution)
 
-            
-          //  if let croppedCGScreenshot = cgScreenshot?.cropping(to: rect2) {
 
+            let rep = NSBitmapImageRep(cgImage: cgScreenshot!)
+            let image = NSImage()
+            image.addRepresentation(rep)
 
-                let rep = NSBitmapImageRep(cgImage: cgScreenshot!)
-                let image = NSImage()
-                image.addRepresentation(rep)
+            self.showPreviewWindow(image: image)
 
-                self.showPreviewWindow(image: image)
+            let requests = [self.getTextRecognitionRequest()]
+            let imageRequestHandler = VNImageRequestHandler(cgImage: cgScreenshot!, orientation: .up, options: [:])
 
-                let requests = [self.getTextRecognitionRequest()]
-                let imageRequestHandler = VNImageRequestHandler(cgImage: cgScreenshot!, orientation: .up, options: [:])
-
-                DispatchQueue.global(qos: .userInitiated).async {
-                    do {
-                        try imageRequestHandler.perform(requests)
-                    } catch let error {
-                        print("Error: \(error)")
-                    }
+            DispatchQueue.global(qos: .userInitiated).async {
+                do {
+                    try imageRequestHandler.perform(requests)
+                } catch let error {
+                    print("Error: \(error)")
                 }
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
-                    self.hidePreviewWindow()
-                }
-          //  }
+            }
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+                self.hidePreviewWindow()
+            }
         }
-        
+
         self.globalWindow = nil
     }
 

@@ -189,7 +189,6 @@ extension StatusBarManager: SelectionHandlerDelegate {
 
         if !self.selectionHandler!.recognizeFast {
             self.hideLoadingIndicator()
-            self.selectionHandler?.stopListening()
         }
     }
 
