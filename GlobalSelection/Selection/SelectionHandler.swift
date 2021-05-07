@@ -121,9 +121,11 @@ public class SelectionHandler: SelectionViewDelegate {
 
             let cgScreenshot = CGWindowListCreateImage(screen.frame, .optionOnScreenBelowWindow, CGWindowID(windowID), .bestResolution)
 
-            let goodPoint = screen.frame.height - NSMaxY(rect)
-            let correctedRect = CGRect(x: rect.origin.x, y: goodPoint, width: rect.width, height: rect.height)
-            if let croppedCGScreenshot = cgScreenshot?.cropping(to: correctedRect) {
+
+            var rect2 = rect
+            rect2.origin.y = NSMaxY(self.getScreenWithMouse()!.frame) - NSMaxY(rect);
+            
+            if let croppedCGScreenshot = cgScreenshot?.cropping(to: rect2) {
 
 
                 let rep = NSBitmapImageRep(cgImage: croppedCGScreenshot)

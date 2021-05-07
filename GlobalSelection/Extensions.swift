@@ -19,7 +19,7 @@ public extension NSWindow {
     }
 
     var titlebarHeight: CGFloat {
-        25.0
+        35.0
     }
     
     
