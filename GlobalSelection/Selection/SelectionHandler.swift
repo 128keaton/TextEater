@@ -119,23 +119,23 @@ public class SelectionHandler: SelectionViewDelegate {
             let screen = self.getScreenWithMouse(), rect.width > 5 && rect.height > 5 {
             self.delegate?.processingResults()
 
-            let cgScreenshot = CGWindowListCreateImage(screen.frame, .optionOnScreenBelowWindow, CGWindowID(windowID), .bestResolution)
+            let cgScreenshot = CGWindowListCreateImage(rect, .optionOnScreenBelowWindow, CGWindowID(windowID), .bestResolution)
 
 
             var rect2 = rect
             rect2.origin.y = NSMaxY(self.getScreenWithMouse()!.frame) - NSMaxY(rect);
             
-            if let croppedCGScreenshot = cgScreenshot?.cropping(to: rect2) {
+          //  if let croppedCGScreenshot = cgScreenshot?.cropping(to: rect2) {
 
 
-                let rep = NSBitmapImageRep(cgImage: croppedCGScreenshot)
+                let rep = NSBitmapImageRep(cgImage: cgScreenshot!)
                 let image = NSImage()
                 image.addRepresentation(rep)
 
                 self.showPreviewWindow(image: image)
 
                 let requests = [self.getTextRecognitionRequest()]
-                let imageRequestHandler = VNImageRequestHandler(cgImage: croppedCGScreenshot, orientation: .up, options: [:])
+                let imageRequestHandler = VNImageRequestHandler(cgImage: cgScreenshot!, orientation: .up, options: [:])
 
                 DispatchQueue.global(qos: .userInitiated).async {
                     do {
@@ -148,7 +148,7 @@ public class SelectionHandler: SelectionViewDelegate {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
                     self.hidePreviewWindow()
                 }
-            }
+          //  }
         }
         
         self.globalWindow = nil
