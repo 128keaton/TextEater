@@ -118,12 +118,20 @@ public class SelectionHandler: SelectionViewDelegate {
         if let windowID = self.globalWindow?.windowNumber,
             let screen = self.getScreenWithMouse(), rect.width > 5 && rect.height > 5 {
             self.delegate?.processingResults()
+            var correctecRect = rect
+            
+            correctecRect.origin.y = screen.frame.height - rect.origin.y - rect.height;
+            
+            if (screen.frame.origin.y < 0) {
+                correctecRect.origin.y = correctecRect.origin.y - screen.frame.origin.y
+            }
+            
 
-            let cgScreenshot = CGWindowListCreateImage(rect, .optionOnScreenBelowWindow, CGWindowID(windowID), .bestResolution)
+            correctecRect.origin.x = correctecRect.origin.x + screen.frame.origin.x
+            let cgScreenshot = CGWindowListCreateImage(correctecRect, .optionOnScreenBelowWindow, CGWindowID(windowID), .bestResolution)
 
 
-            var rect2 = rect
-            rect2.origin.y = NSMaxY(self.getScreenWithMouse()!.frame) - NSMaxY(rect);
+
             
           //  if let croppedCGScreenshot = cgScreenshot?.cropping(to: rect2) {
 
