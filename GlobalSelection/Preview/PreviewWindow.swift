@@ -86,7 +86,7 @@ class PreviewWindow: NSWindow {
         self.isReleasedWhenClosed = false
         self.styleMask.insert(.fullSizeContentView)
         self.contentView = self.visualEffect
-
+        self.level = NSWindow.Level.init(Int(CGWindowLevelForKey(.statusWindow)))
         self.minSize = NSSize(width: 120, height: 120)
         self.maxSize = NSSize(width: 250, height: 250)
         self.contentMaxSize = self.maxSize
