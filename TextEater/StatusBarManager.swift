@@ -14,11 +14,13 @@ class StatusBarManager: NSObject {
 
     @IBOutlet weak var menu: NSMenu?
     @IBOutlet var appDelegate: AppDelegate?
+    @IBOutlet weak var keepLineBreaksItem: NSMenuItem?
 
     var statusItem: NSStatusItem?
     var selectionHandler: SelectionHandler?
     var progressIndicator: NSProgressIndicator?
 
+    private let delegate = AppDelegate()
     private let defaultStatusImage = NSImage(named: "NSAddTemplate")
     private let loadingStatusImage = NSImage(named: "EmptyIconImage")
     private var canNotify: Bool = false
@@ -43,6 +45,8 @@ class StatusBarManager: NSObject {
                 print(error)
             }
         }
+        
+        self.appDelegate?.statusBarManager = self
     }
 
     override func awakeFromNib() {
@@ -51,14 +55,20 @@ class StatusBarManager: NSObject {
         if UserDefaults.standard.value(forKey: "notify") == nil {
             UserDefaults.standard.set(true, forKey: "notify")
         }
+        
+        if UserDefaults.standard.value(forKey: "keepLineBreaks") == nil {
+            UserDefaults.standard.set(false, forKey: "keepLineBreaks")
+        }
 
         let useFastRecognition = UserDefaults.standard.bool(forKey: "fast")
         let debug = UserDefaults.standard.bool(forKey: "debug")
+        let keepLineBreaks = UserDefaults.standard.bool(forKey: "keepLineBreaks")
 
         self.shouldNotify = UserDefaults.standard.bool(forKey: "notify")
         self.selectionHandler = SelectionHandler(delegate: self)
         self.selectionHandler?.recognizeFast = useFastRecognition
         self.selectionHandler?.debug = debug
+        self.selectionHandler?.keepLineBreaks = keepLineBreaks
 
 
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
@@ -66,6 +76,10 @@ class StatusBarManager: NSObject {
 
         if let menu = menu {
             statusItem?.menu = menu
+        }
+        
+        if let keepLineBreaksItem = self.keepLineBreaksItem {
+            keepLineBreaksItem.state = keepLineBreaks ? .on : .off
         }
 
         if let button = self.statusItem?.button {
@@ -87,11 +101,24 @@ class StatusBarManager: NSObject {
     }
 
     @IBAction func captureToggle(sender: Any) {
-        self.selectionHandler?.startListening()
+        self.startCapturing()
     }
 
     @IBAction func quitApp(sender: Any) {
         NSApp.terminate(self)
+    }
+    
+    @IBAction func keepLineBreaksToggle(sender: NSMenuItem) {
+        sender.state = sender.state == .on ? .off : .on
+        let keepLineBreaks = sender.state == .on
+        
+        UserDefaults.standard.set(keepLineBreaks, forKey: "keepLineBreaks")
+        self.selectionHandler?.keepLineBreaks = keepLineBreaks
+        print("Keep line breaks: \(keepLineBreaks ? "yes" : "no")")
+    }
+    
+    public func startCapturing() {
+        self.selectionHandler?.startListening()
     }
 
     private func showProcessedNotification(text: String?, error: String?) {

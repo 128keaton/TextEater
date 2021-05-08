@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,6 +17,12 @@
 		8AF8933026447C0200087DBA /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8AF8932F26447C0200087DBA /* Preferences.storyboard */; };
 		8AF8933326447C1900087DBA /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF8933226447C1900087DBA /* PreferencesViewController.swift */; };
 		8AF89335264482B600087DBA /* StatusBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF89334264482B600087DBA /* StatusBarManager.swift */; };
+		8AF893382646098600087DBA /* HotKey.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AF893372646098600087DBA /* HotKey.xcframework */; };
+		8AF893392646098600087DBA /* HotKey.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8AF893372646098600087DBA /* HotKey.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8AF8933E26460B1F00087DBA /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF8933D26460B1F00087DBA /* Storage.swift */; };
+		8AF8934026460B3E00087DBA /* GlobalKeybindPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF8933F26460B3E00087DBA /* GlobalKeybindPreferences.swift */; };
+		8AF8934226460E6A00087DBA /* PreferencesWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF8934126460E6A00087DBA /* PreferencesWindow.swift */; };
+		8AF893442646136D00087DBA /* KeyBindField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF893432646136D00087DBA /* KeyBindField.swift */; };
 		8AFB384426431586007943DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFB384326431586007943DC /* AppDelegate.swift */; };
 		8AFB384826431588007943DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AFB384726431588007943DC /* Assets.xcassets */; };
 		8AFD1A0826446813004AAECE /* PreviewWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFD1A0726446813004AAECE /* PreviewWindow.swift */; };
@@ -42,6 +48,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				8A6ED40F26445F1D00967398 /* GlobalSelection.framework in Embed Frameworks */,
+				8AF893392646098600087DBA /* HotKey.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -59,6 +66,11 @@
 		8AF8932F26447C0200087DBA /* Preferences.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
 		8AF8933226447C1900087DBA /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		8AF89334264482B600087DBA /* StatusBarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarManager.swift; sourceTree = "<group>"; };
+		8AF893372646098600087DBA /* HotKey.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = HotKey.xcframework; path = Carthage/Build/HotKey.xcframework; sourceTree = "<group>"; };
+		8AF8933D26460B1F00087DBA /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
+		8AF8933F26460B3E00087DBA /* GlobalKeybindPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalKeybindPreferences.swift; sourceTree = "<group>"; };
+		8AF8934126460E6A00087DBA /* PreferencesWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindow.swift; sourceTree = "<group>"; };
+		8AF893432646136D00087DBA /* KeyBindField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBindField.swift; sourceTree = "<group>"; };
 		8AFB384026431586007943DC /* TextEater.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TextEater.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AFB384326431586007943DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8AFB384726431588007943DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -82,6 +94,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A6ED40E26445F1D00967398 /* GlobalSelection.framework in Frameworks */,
+				8AF893382646098600087DBA /* HotKey.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,12 +122,31 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
+		8AF893362646098600087DBA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8AF893372646098600087DBA /* HotKey.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8AF8933C26460A9300087DBA /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				8AF8933226447C1900087DBA /* PreferencesViewController.swift */,
+				8AF8934126460E6A00087DBA /* PreferencesWindow.swift */,
+				8AF893432646136D00087DBA /* KeyBindField.swift */,
+			);
+			path = Preferences;
+			sourceTree = "<group>";
+		};
 		8AFB383726431586007943DC = {
 			isa = PBXGroup;
 			children = (
 				8AFB384226431586007943DC /* TextEater */,
 				8A6ED40826445F1D00967398 /* GlobalSelection */,
 				8AFB384126431586007943DC /* Products */,
+				8AF893362646098600087DBA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -132,11 +164,13 @@
 			children = (
 				8AFB384726431588007943DC /* Assets.xcassets */,
 				8AFB384326431586007943DC /* AppDelegate.swift */,
-				8AF8933226447C1900087DBA /* PreferencesViewController.swift */,
+				8AF8933C26460A9300087DBA /* Preferences */,
 				8AF89334264482B600087DBA /* StatusBarManager.swift */,
 				8AF8933126447C0700087DBA /* UI */,
 				8AFB384C26431588007943DC /* Info.plist */,
 				8AFB384D26431588007943DC /* TextEater.entitlements */,
+				8AF8933D26460B1F00087DBA /* Storage.swift */,
+				8AF8933F26460B3E00087DBA /* GlobalKeybindPreferences.swift */,
 			);
 			path = TextEater;
 			sourceTree = "<group>";
@@ -288,6 +322,10 @@
 				8AF89335264482B600087DBA /* StatusBarManager.swift in Sources */,
 				8AFB384426431586007943DC /* AppDelegate.swift in Sources */,
 				8AF8933326447C1900087DBA /* PreferencesViewController.swift in Sources */,
+				8AF8934026460B3E00087DBA /* GlobalKeybindPreferences.swift in Sources */,
+				8AF8934226460E6A00087DBA /* PreferencesWindow.swift in Sources */,
+				8AF8933E26460B1F00087DBA /* Storage.swift in Sources */,
+				8AF893442646136D00087DBA /* KeyBindField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

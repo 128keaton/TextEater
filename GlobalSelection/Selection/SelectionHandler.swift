@@ -22,6 +22,7 @@ public class SelectionHandler: SelectionViewDelegate {
     private var recognitionLevel: VNRequestTextRecognitionLevel = .fast
     private var previewWindow: PreviewWindow?
 
+    public var keepLineBreaks: Bool = false
     public var showPreview: Bool = true
     public var debug: Bool = false
     public var recognizeFast: Bool = true {
@@ -56,8 +57,14 @@ public class SelectionHandler: SelectionViewDelegate {
         print("Show preview window: \(self.showPreview ? "yes" : "no")")
         print("Show debug overlay: \(self.debug ? "yes" : "no")")
 
+        if let locale = NSLocale.preferredLanguages.first {
+            print("Using \(locale) for text recognition")
+            request.recognitionLanguages = [locale]
+        } else {
+            request.recognitionLanguages = ["en_US"]
+        }
+
         request.recognitionLevel = self.recognitionLevel
-        request.recognitionLanguages = ["en_US"]
 
         return request
     }
@@ -74,16 +81,18 @@ public class SelectionHandler: SelectionViewDelegate {
             return
         }
 
+        print("Keep line breaks: \(self.keepLineBreaks ? "yes" : "no")")
+        
         let textResult: String = results.map { result in
             if let observation = result as? VNRecognizedTextObservation {
                 return observation.topCandidates(1).map { text in
                     return text.string
-                }.joined(separator: " ")
+                }.joined(separator: self.keepLineBreaks ? "\n" : " ")
 
             }
 
             return ""
-        }.joined(separator: " ")
+        }.joined(separator: self.keepLineBreaks ? "\n" : " ")
 
         self.delegate?.resultsAvailable(text: textResult, error: nil)
     }

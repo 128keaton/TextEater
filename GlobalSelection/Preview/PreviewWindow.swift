@@ -81,7 +81,6 @@ class PreviewWindow: NSWindow {
     private func configureWindow(_ image: NSImage) {
         self.title = "Preview"
         self.titlebarAppearsTransparent = true
-        self.level = NSWindow.Level.init(Int(CGWindowLevelForKey(.statusWindow)))
         self.backgroundColor = .clear
         self.isMovableByWindowBackground = true
         self.isReleasedWhenClosed = false

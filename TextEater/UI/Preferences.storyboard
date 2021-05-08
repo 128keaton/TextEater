@@ -8,20 +8,20 @@
         <!--Preferences-->
         <scene sceneID="PEd-7d-5j0">
             <objects>
-                <viewController title="Preferences" id="bU7-R8-ocO" customClass="PreferencesViewController" customModule="TextEater" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Preferences" showSeguePresentationStyle="single" id="bU7-R8-ocO" customClass="PreferencesViewController" customModule="TextEater" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="tOy-S4-hL0">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="353"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <box fixedFrame="YES" title="Miscellaneous" translatesAutoresizingMaskIntoConstraints="NO" id="M7g-JV-74x">
-                                <rect key="frame" x="17" y="16" width="416" height="97"/>
+                                <rect key="frame" x="17" y="16" width="416" height="150"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <view key="contentView" id="fob-7A-dgH">
-                                    <rect key="frame" x="3" y="3" width="410" height="79"/>
+                                    <rect key="frame" x="3" y="3" width="410" height="132"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dtL-lA-lQG">
-                                            <rect key="frame" x="20" y="31" width="372" height="18"/>
+                                            <rect key="frame" x="20" y="84" width="372" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Debug Mode:" bezelStyle="regularSquare" imagePosition="right" state="on" inset="2" id="SaD-mc-PsU">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -31,11 +31,40 @@
                                                 <action selector="debugChanged:" target="bU7-R8-ocO" id="Yvb-h9-EKV"/>
                                             </connections>
                                         </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iEh-ds-duy">
+                                            <rect key="frame" x="331" y="14" width="66" height="32"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="push" title="Clear" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="eiB-F3-UIu">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="unregister:" target="bU7-R8-ocO" id="lOJ-pZ-NfD"/>
+                                            </connections>
+                                        </button>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zpH-LE-zHp">
+                                            <rect key="frame" x="20" y="23" width="174" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Capture Keyboard Shortcut:" id="PJg-QH-Iuv">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField verticalHuggingPriority="750" fixedFrame="YES" preferredMaxLayoutWidth="124" translatesAutoresizingMaskIntoConstraints="NO" id="OPl-Vv-2PQ" customClass="KeyBindField" customModule="TextEater" customModuleProvider="target">
+                                            <rect key="frame" x="221" y="20" width="88" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" bezelStyle="round" id="oDA-oU-8LA">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
                                     </subviews>
                                 </view>
                             </box>
                             <box fixedFrame="YES" title="General" translatesAutoresizingMaskIntoConstraints="NO" id="kad-uB-WM7">
-                                <rect key="frame" x="17" y="131" width="416" height="149"/>
+                                <rect key="frame" x="17" y="184" width="416" height="149"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <view key="contentView" id="7Of-hg-1dX">
                                     <rect key="frame" x="3" y="3" width="410" height="131"/>
@@ -96,7 +125,9 @@
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="clearButton" destination="iEh-ds-duy" id="Czq-vP-QGM"/>
                         <outlet property="debugButton" destination="dtL-lA-lQG" id="2Rz-3e-Z68"/>
+                        <outlet property="keybindField" destination="OPl-Vv-2PQ" id="jhN-xa-QuO"/>
                         <outlet property="modeButton" destination="I3n-1D-Fm0" id="zLu-HO-7d8"/>
                         <outlet property="notifyButton" destination="WPw-M9-WAG" id="dkh-sI-H1e"/>
                         <outlet property="previewButton" destination="hy9-H0-n7B" id="fqv-jd-SA3"/>
@@ -104,7 +135,7 @@
                 </viewController>
                 <customObject id="9uD-mB-xHs" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-28" y="87"/>
+            <point key="canvasLocation" x="370" y="98.5"/>
         </scene>
     </scenes>
 </document>
