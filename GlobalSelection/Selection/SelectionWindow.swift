@@ -35,4 +35,10 @@ public class SelectionWindow: NSWindow {
         self.acceptsMouseMovedEvents = true
         self.isReleasedWhenClosed = false
     }
+    
+    public override func becomeKey() {
+        super.becomeKey()
+        
+        NSCursor.crosshair.push()
+    }
 }

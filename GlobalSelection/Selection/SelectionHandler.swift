@@ -108,6 +108,7 @@ public class SelectionHandler: SelectionViewDelegate {
         }
 
         let window = SelectionWindow(frame: windowRect, selectionDelegate: self, debug: self.debug)
+        window.becomeKey()
         NSApplication.shared.activate(ignoringOtherApps: true)
 
         return window
