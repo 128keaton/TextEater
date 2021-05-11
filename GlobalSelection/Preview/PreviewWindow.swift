@@ -15,21 +15,24 @@ class PreviewWindow: NSWindow {
     private var imageView: PreviewImageView?
     private var visualEffect: NSVisualEffectView?
     private var lockButton: NSButton?
+    private var closeButton: NSButton?
     private var lockTimer: Timer?
     private var lockTimerExpired: Bool = false
     
     init(image: NSImage) {
-        super.init(contentRect: NSRect(x: 0, y: PreviewWindow.getScreenWithMouse()?.frame.maxX ?? 0, width: 200, height: 200), styleMask: .titled, backing: .buffered, defer: true)
+        super.init(contentRect: NSRect(x: 0, y: 0, width: 200, height: 200), styleMask: .titled, backing: .buffered, defer: true)
 
         self.setupImageView(image)
         self.setupEffectView()
         self.configureWindow(image)
         self.addBaseConstraints()
         self.addLockButton()
+        self.addCloseButton()
         self.fadeIn(self)
     }
     
     override func close() {
+        print("Is self \(self) locked? \(self.locked)")
         if !self.locked {
             self.fadeOut(self)
         }
@@ -48,6 +51,9 @@ class PreviewWindow: NSWindow {
         }
     }
 
+    @objc func closeFadeOut() {
+        self.fadeOut(self)
+    }
     
     private func addLockButton() {
         if let contentView = self.contentView {
@@ -59,6 +65,19 @@ class PreviewWindow: NSWindow {
             self.lockButton?.isBordered = false
             
             contentView.addSubview(self.lockButton!)
+        }
+    }
+    
+    private func addCloseButton() {
+        if let contentView = self.contentView {
+            self.closeButton = NSButton(frame: NSRect(x: 8, y: contentView.frame.maxY - 25, width: 22, height: 22))
+            self.closeButton?.image = NSImage(named: "NSStopProgressFreestandingTemplate")
+            self.closeButton?.action = #selector(closeFadeOut)
+            self.closeButton?.target = self
+            self.closeButton?.imagePosition = .imageOnly
+            self.closeButton?.isBordered = false
+            
+            contentView.addSubview(self.closeButton!)
         }
     }
 

@@ -21,6 +21,7 @@ public class SelectionHandler: SelectionViewDelegate {
     private var selectionView: SelectionView?
     private var recognitionLevel: VNRequestTextRecognitionLevel = .fast
     private var previewWindow: PreviewWindow?
+    private var locale: String = "en_US"
 
     public var keepLineBreaks: Bool = false
     public var showPreview: Bool = true
@@ -34,6 +35,14 @@ public class SelectionHandler: SelectionViewDelegate {
 
     public init(delegate: SelectionHandlerDelegate) {
         self.delegate = delegate
+        
+        if let locale = NSLocale.preferredLanguages.first {
+            self.locale = locale
+        }
+    }
+    
+    public func getLocale() -> String {
+        return self.locale
     }
 
     public func startListening() {
@@ -56,14 +65,9 @@ public class SelectionHandler: SelectionViewDelegate {
         print("Creating request with recognition level: \(self.recognitionLevel == .fast ? "fast" : "accurate")")
         print("Show preview window: \(self.showPreview ? "yes" : "no")")
         print("Show debug overlay: \(self.debug ? "yes" : "no")")
-
-        if let locale = NSLocale.preferredLanguages.first {
-            print("Using \(locale) for text recognition")
-            request.recognitionLanguages = [locale]
-        } else {
-            request.recognitionLanguages = ["en_US"]
-        }
-
+        print("Using \(self.locale) for text recognition")
+        
+        request.recognitionLanguages = [self.locale]
         request.recognitionLevel = self.recognitionLevel
 
         return request

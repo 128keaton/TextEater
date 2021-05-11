@@ -14,7 +14,7 @@ private let defaultWindowAnimationDuration: TimeInterval = 0.25
 public extension NSWindow {
     func moveTopRight() {
         if let screenFrame = screen?.frame {
-            self.setFrameOrigin(NSPoint(x: NSMaxX(screenFrame) - self.frame.width - 12, y: NSMaxY(screenFrame)))
+            self.setFrameOrigin(NSPoint(x: NSMaxX(screenFrame) - self.frame.width - 12, y: NSMaxY(screenFrame) - 100))
         }
     }
 

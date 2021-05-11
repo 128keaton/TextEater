@@ -9,6 +9,7 @@ import Foundation
 import AppKit
 import GlobalSelection
 import UserNotifications
+import AVFoundation
 
 class StatusBarManager: NSObject {
 
@@ -30,6 +31,7 @@ class StatusBarManager: NSObject {
     private var canNotify: Bool = false
     private var shouldNotify: Bool = true
     private var useContinuousClipboard: Bool = false
+    private var synth: AVSpeechSynthesizer = AVSpeechSynthesizer()
 
     override init() {
         super.init()
@@ -42,7 +44,8 @@ class StatusBarManager: NSObject {
             self.canNotify = granted
 
             if granted {
-                let processResultCategory = UNNotificationCategory(identifier: "processResult", actions: [], intentIdentifiers: [], options: [])
+                let readAloudChoice = UNNotificationAction(identifier: "readAloud", title: "Read Aloud", options: [])
+                let processResultCategory = UNNotificationCategory(identifier: "processResult", actions: [readAloudChoice], intentIdentifiers: [], options: [])
                 UNUserNotificationCenter.current().setNotificationCategories([processResultCategory])
             }
 
@@ -51,6 +54,7 @@ class StatusBarManager: NSObject {
             }
         }
         
+        self.synth.delegate = self
         self.appDelegate?.statusBarManager = self
     }
 
@@ -150,6 +154,15 @@ class StatusBarManager: NSObject {
     public func startCapturing() {
         self.selectionHandler?.startListening()
     }
+    
+    func copyWithZone(zone: NSZone) {
+        self.selectionHandler?.startListening()
+    }
+    
+    @objc func stopSpeaking() {
+        self.synth.stopSpeaking(at: .immediate)
+        self.removeStopSpeakingMenuItem()
+    }
 
     private func showProcessedNotification(text: String?, error: String?) {
         if !self.shouldNotify || !self.canNotify {
@@ -230,6 +243,37 @@ class StatusBarManager: NSObject {
             }
         }
     }
+    
+    private func showStopSpeakingMenuItem() {
+        DispatchQueue.main.async {
+            let stopSpeakingItem = NSMenuItem(title: "Stop Speaking", action: #selector(self.stopSpeaking), keyEquivalent: "")
+            stopSpeakingItem.target = self
+            stopSpeakingItem.isEnabled = true
+            
+            if let menu = self.menu,
+               let captureItem = menu.item(withTitle: "Capture"),
+               let index = menu.items.lastIndex(of: captureItem) {
+                menu.insertItem(stopSpeakingItem, at: index)
+            }
+        }
+    }
+    
+    private func removeStopSpeakingMenuItem() {
+        DispatchQueue.main.async {
+            if let menu = self.menu,
+               let stopSpeakingItem = menu.item(withTitle: "Stop Speaking") {
+                menu.removeItem(stopSpeakingItem)
+            }
+        }
+    }
+    
+    private func readAloud(_ utteranceString: String) {
+        let utterance = AVSpeechUtterance(string: utteranceString)
+        utterance.voice = AVSpeechSynthesisVoice(language: self.selectionHandler?.getLocale())
+        utterance.rate = 0.1
+
+        self.synth.speak(utterance)
+    }
 }
 
 extension StatusBarManager: SelectionHandlerDelegate {
@@ -278,8 +322,23 @@ extension StatusBarManager: UNUserNotificationCenterDelegate {
             pasteboard.setString(text, forType: .string)
 
             print("Text Copied: \(text)")
+            
+            if response.actionIdentifier == "readAloud" {
+                self.readAloud(text)
+            }
         }
         
         completionHandler()
+    }
+}
+
+
+extension StatusBarManager: AVSpeechSynthesizerDelegate {
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance) {
+        self.showStopSpeakingMenuItem()
+    }
+    
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+        self.removeStopSpeakingMenuItem()
     }
 }
