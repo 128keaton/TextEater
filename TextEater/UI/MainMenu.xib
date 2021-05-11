@@ -19,11 +19,13 @@
         <customObject id="I7z-ZM-4pw" customClass="StatusBarManager" customModule="TextEater" customModuleProvider="target">
             <connections>
                 <outlet property="appDelegate" destination="TEE-vS-YS4" id="LSR-n3-JeB"/>
+                <outlet property="clearHistoryItem" destination="krr-83-p2d" id="buT-nY-cI1"/>
+                <outlet property="continuousItem" destination="w3z-qn-dNo" id="4DN-Mz-Aa8"/>
                 <outlet property="keepLineBreaksItem" destination="tPC-6z-OH7" id="UNG-BO-aLk"/>
                 <outlet property="menu" destination="DyD-f5-xWe" id="6nn-h9-gJV"/>
             </connections>
         </customObject>
-        <menu id="DyD-f5-xWe">
+        <menu autoenablesItems="NO" id="DyD-f5-xWe">
             <items>
                 <menuItem title="Capture" allowsKeyEquivalentWhenHidden="YES" id="pyG-tE-g5H">
                     <modifierMask key="keyEquivalentModifierMask"/>
@@ -39,16 +41,36 @@
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="Tj3-uY-DLa"/>
+                <menuItem title="Continuous" id="w3z-qn-dNo">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="useContinuousClipboardToggleWithSender:" target="I7z-ZM-4pw" id="krf-22-VPc"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Clear History" enabled="NO" id="krr-83-p2d">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="clearContinuousClipboardWithSender:" target="I7z-ZM-4pw" id="MDO-xc-BT0"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="yhK-fI-fQR"/>
                 <menuItem title="Preferences" id="Rul-K9-f5l">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="showPreferencesWithSender:" target="I7z-ZM-4pw" id="8S2-PJ-gD4"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Quit" id="OEu-TJ-ecy">
+                <menuItem isSeparatorItem="YES" id="MBe-xg-A0B"/>
+                <menuItem title="About TextEater" id="rGC-oz-2Lm">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="quitAppWithSender:" target="I7z-ZM-4pw" id="pFq-km-RjE"/>
+                        <action selector="openAboutPanelWithSender:" target="I7z-ZM-4pw" id="DPf-I1-lf3"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Quit TextEater" id="OEu-TJ-ecy">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="terminate:" target="-1" id="TSA-q9-4J3"/>
                     </connections>
                 </menuItem>
             </items>

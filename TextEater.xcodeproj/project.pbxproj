@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8A4498D0264A16C600957894 /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = 8A4498CF264A16C600957894 /* Credits.html */; };
 		8A6ED40B26445F1D00967398 /* GlobalSelection.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A6ED40926445F1D00967398 /* GlobalSelection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8A6ED40E26445F1D00967398 /* GlobalSelection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A6ED40726445F1D00967398 /* GlobalSelection.framework */; };
 		8A6ED40F26445F1D00967398 /* GlobalSelection.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8A6ED40726445F1D00967398 /* GlobalSelection.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -14,6 +15,7 @@
 		8A6ED41526445F3200967398 /* SelectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC338D126433EE800577BA3 /* SelectionHandler.swift */; };
 		8A6ED41626445F3200967398 /* SelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6ED3FD264458B600967398 /* SelectionView.swift */; };
 		8AC338D026433E4E00577BA3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AC338CF26433E4E00577BA3 /* MainMenu.xib */; };
+		8ACD689F26475964003F56EC /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACD689E26475964003F56EC /* History.swift */; };
 		8AF8933026447C0200087DBA /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8AF8932F26447C0200087DBA /* Preferences.storyboard */; };
 		8AF8933326447C1900087DBA /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF8933226447C1900087DBA /* PreferencesViewController.swift */; };
 		8AF89335264482B600087DBA /* StatusBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF89334264482B600087DBA /* StatusBarManager.swift */; };
@@ -56,6 +58,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8A4498CF264A16C600957894 /* Credits.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = Credits.html; sourceTree = "<group>"; };
 		8A6ED3FD264458B600967398 /* SelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionView.swift; sourceTree = "<group>"; };
 		8A6ED40026445BE200967398 /* SelectionWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionWindow.swift; sourceTree = "<group>"; };
 		8A6ED40726445F1D00967398 /* GlobalSelection.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GlobalSelection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -63,6 +66,7 @@
 		8A6ED40A26445F1D00967398 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8AC338CF26433E4E00577BA3 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		8AC338D126433EE800577BA3 /* SelectionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionHandler.swift; sourceTree = "<group>"; };
+		8ACD689E26475964003F56EC /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		8AF8932F26447C0200087DBA /* Preferences.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
 		8AF8933226447C1900087DBA /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		8AF89334264482B600087DBA /* StatusBarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarManager.swift; sourceTree = "<group>"; };
@@ -111,6 +115,17 @@
 				8A6ED40A26445F1D00967398 /* Info.plist */,
 			);
 			path = GlobalSelection;
+			sourceTree = "<group>";
+		};
+		8ACD689B26463649003F56EC /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				8AF8933D26460B1F00087DBA /* Storage.swift */,
+				8AF8933F26460B3E00087DBA /* GlobalKeybindPreferences.swift */,
+				8ACD689E26475964003F56EC /* History.swift */,
+				8A4498CF264A16C600957894 /* Credits.html */,
+			);
+			path = Misc;
 			sourceTree = "<group>";
 		};
 		8AF8933126447C0700087DBA /* UI */ = {
@@ -169,8 +184,7 @@
 				8AF8933126447C0700087DBA /* UI */,
 				8AFB384C26431588007943DC /* Info.plist */,
 				8AFB384D26431588007943DC /* TextEater.entitlements */,
-				8AF8933D26460B1F00087DBA /* Storage.swift */,
-				8AF8933F26460B3E00087DBA /* GlobalKeybindPreferences.swift */,
+				8ACD689B26463649003F56EC /* Misc */,
 			);
 			path = TextEater;
 			sourceTree = "<group>";
@@ -296,6 +310,7 @@
 				8AF8933026447C0200087DBA /* Preferences.storyboard in Resources */,
 				8AFB384826431588007943DC /* Assets.xcassets in Resources */,
 				8AC338D026433E4E00577BA3 /* MainMenu.xib in Resources */,
+				8A4498D0264A16C600957894 /* Credits.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,6 +336,7 @@
 			files = (
 				8AF89335264482B600087DBA /* StatusBarManager.swift in Sources */,
 				8AFB384426431586007943DC /* AppDelegate.swift in Sources */,
+				8ACD689F26475964003F56EC /* History.swift in Sources */,
 				8AF8933326447C1900087DBA /* PreferencesViewController.swift in Sources */,
 				8AF8934026460B3E00087DBA /* GlobalKeybindPreferences.swift in Sources */,
 				8AF8934226460E6A00087DBA /* PreferencesWindow.swift in Sources */,

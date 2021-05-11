@@ -15,16 +15,21 @@ class StatusBarManager: NSObject {
     @IBOutlet weak var menu: NSMenu?
     @IBOutlet var appDelegate: AppDelegate?
     @IBOutlet weak var keepLineBreaksItem: NSMenuItem?
+    @IBOutlet weak var clearHistoryItem: NSMenuItem?
+    @IBOutlet weak var continuousItem: NSMenuItem?
 
     var statusItem: NSStatusItem?
     var selectionHandler: SelectionHandler?
     var progressIndicator: NSProgressIndicator?
 
+    private let history = History.shared
     private let delegate = AppDelegate()
     private let defaultStatusImage = NSImage(named: "NSAddTemplate")
     private let loadingStatusImage = NSImage(named: "EmptyIconImage")
+    
     private var canNotify: Bool = false
     private var shouldNotify: Bool = true
+    private var useContinuousClipboard: Bool = false
 
     override init() {
         super.init()
@@ -60,16 +65,23 @@ class StatusBarManager: NSObject {
             UserDefaults.standard.set(false, forKey: "keepLineBreaks")
         }
 
+        if UserDefaults.standard.value(forKey: "useContinuousClipboard") == nil {
+            UserDefaults.standard.set(false, forKey: "useContinuousClipboard")
+        }
+
         let useFastRecognition = UserDefaults.standard.bool(forKey: "fast")
         let debug = UserDefaults.standard.bool(forKey: "debug")
         let keepLineBreaks = UserDefaults.standard.bool(forKey: "keepLineBreaks")
 
         self.shouldNotify = UserDefaults.standard.bool(forKey: "notify")
+        self.useContinuousClipboard = UserDefaults.standard.bool(forKey: "useContinuousClipboard")
+        
         self.selectionHandler = SelectionHandler(delegate: self)
         self.selectionHandler?.recognizeFast = useFastRecognition
         self.selectionHandler?.debug = debug
         self.selectionHandler?.keepLineBreaks = keepLineBreaks
 
+        self.continuousItem?.state = self.useContinuousClipboard ? .on : .off
 
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         statusItem?.button?.image = self.defaultStatusImage
@@ -104,10 +116,6 @@ class StatusBarManager: NSObject {
         self.startCapturing()
     }
 
-    @IBAction func quitApp(sender: Any) {
-        NSApp.terminate(self)
-    }
-    
     @IBAction func keepLineBreaksToggle(sender: NSMenuItem) {
         sender.state = sender.state == .on ? .off : .on
         let keepLineBreaks = sender.state == .on
@@ -115,6 +123,28 @@ class StatusBarManager: NSObject {
         UserDefaults.standard.set(keepLineBreaks, forKey: "keepLineBreaks")
         self.selectionHandler?.keepLineBreaks = keepLineBreaks
         print("Keep line breaks: \(keepLineBreaks ? "yes" : "no")")
+    }
+    
+    @IBAction func useContinuousClipboardToggle(sender: NSMenuItem) {
+        sender.state = sender.state == .on ? .off : .on
+        let useContinuousClipboard = sender.state == .on
+        
+        UserDefaults.standard.set(useContinuousClipboard, forKey: "useContinuousClipboard")
+        print("Use continuous clipboard: \(useContinuousClipboard ? "yes" : "no")")
+        
+        self.history.clear()
+        self.useContinuousClipboard = useContinuousClipboard
+        self.clearHistoryItem?.isEnabled = false
+    }
+    
+    @IBAction func clearContinuousClipboard(sender: NSMenuItem) {
+        self.history.clear()
+        sender.isEnabled = false
+    }
+    
+    @IBAction func openAboutPanel(sender: NSMenuItem) {
+        NSApp.activate(ignoringOtherApps: true)
+        NSApp.orderFrontStandardAboutPanel(sender)
     }
     
     public func startCapturing() {
@@ -207,7 +237,15 @@ extension StatusBarManager: SelectionHandlerDelegate {
         if let text = text {
             let pasteboard = NSPasteboard.general
             pasteboard.clearContents()
-            pasteboard.setString(text, forType: .string)
+            
+            if self.useContinuousClipboard {
+                self.history.add(text)
+                self.clearHistoryItem?.isEnabled = true
+                
+                pasteboard.setString(self.history.getString(), forType: .string)
+            } else {
+                pasteboard.setString(text, forType: .string)
+            }
 
             print("Text Result: \(text)")
         }
